@@ -14,7 +14,7 @@ Hi there! 👋 I'm Priyadharshini S M, a passionate fresher excited to embark on
 
 ## 🛠️ Skills
 
-- **Languages:** Python, SQL, R
+- **Languages:** Python, SQL
 - **Data Handling:** Pandas, NumPy
 - **Visualization Tools:** Tableau, Power BI, Matplotlib, Seaborn
 - **Databases:** MySQL
