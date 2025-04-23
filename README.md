@@ -6,7 +6,7 @@ Hi there! 👋 I'm Priyadharshini S M, a passionate fresher excited to embark on
 
 ## 👩‍🎓 About Me
 
-- 🎓 **B.Tech in Computer Science and Business Systems** with a specialization in Cloud Computing.
+- 🎓 **B.Tech in Computer Science and Business Systems** Honours with specialization in Cloud Computing and Data Center Technologies.
 - 🌱 Currently learning advanced data visualization and data analytics techniques.
 - 💡 Interested in **data cleaning**, **predictive analytics**, and **data visualization**.
 
