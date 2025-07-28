@@ -1,0 +1,149 @@
+import mysql.connector
+
+def connect_to_db():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",  # Replace with your MySQL username
+        password="sqlpriya@123",  # Replace with your MySQL password
+        database="car_management"
+    )
+
+def add_car():
+    carname = input("Enter car name: ")
+    model = input("Enter car model: ")
+    price = float(input("Enter car price: "))
+    
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    
+    Qry = "INSERT INTO car (carname, model, price) VALUES (%s, %s, %s)"
+    val = (carname, model, price)
+    cursor.execute(Qry, val)
+    
+    conn.commit()
+    print(f"Car {carname} added successfully.")
+    
+    cursor.close()
+    conn.close()
+
+def view_all_cars():
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM car")
+    rows = cursor.fetchall()
+    
+    for row in rows:
+        print(f"Car ID: {row[0]}, Name: {row[1]}, Model: {row[2]}, Price: {row[3]}")
+    
+    cursor.close()
+    conn.close()
+
+def search_car_by_model_or_price():
+    choice = input("Search by (1) Model or (2) Price? Enter 1 or 2: ")
+    
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    
+    if choice == '1':
+        model = input("Enter car model: ")
+        cursor.execute("SELECT * FROM car WHERE model=%s", (model,))
+    elif choice == '2':
+        price = float(input("Enter car price: "))
+        cursor.execute("SELECT * FROM car WHERE price=%s", (price,))
+    else:
+        print("Invalid choice!")
+        cursor.close()
+        conn.close()
+        return
+    
+    rows = cursor.fetchall()
+    
+    for row in rows:
+        print(f"Car ID: {row[0]}, Name: {row[1]}, Model: {row[2]}, Price: {row[3]}")
+    
+    cursor.close()
+    conn.close()
+
+def delete_car_by_id():
+    carno = int(input("Enter car ID to delete: "))
+    
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    
+    cursor.execute("DELETE FROM car WHERE carno=%s", (carno,))
+    conn.commit()
+    
+    if cursor.rowcount > 0:
+        print(f"Car with ID {carno} deleted successfully.")
+    else:
+        print(f"No car found with ID {carno}.")
+    
+    cursor.close()
+    conn.close()
+
+def update_car_details():
+    carno = int(input("Enter car ID to update: "))
+    
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    
+    print("Choose what you want to update:")
+    print("1. Car Name")
+    print("2. Model")
+    print("3. Price")
+    
+    choice = int(input("Enter your choice (1/2/3): "))
+    
+    if choice == 1:
+        carname = input("Enter new car name: ")
+        cursor.execute("UPDATE car SET carname=%s WHERE carno=%s", (carname, carno))
+    elif choice == 2:
+        model = input("Enter new model: ")
+        cursor.execute("UPDATE car SET model=%s WHERE carno=%s", (model, carno))
+    elif choice == 3:
+        price = float(input("Enter new price: "))
+        cursor.execute("UPDATE car SET price=%s WHERE carno=%s", (price, carno))
+    else:
+        print("Invalid choice!")
+        cursor.close()
+        conn.close()
+        return
+    
+    conn.commit()
+    print(f"Car with ID {carno} updated successfully.")
+    
+    cursor.close()
+    conn.close()
+
+# Main Menu
+def main():
+    while True:
+        print("\nCar Management System")
+        print("1. Add Car")
+        print("2. View All Cars")
+        print("3. Search Car by Model or Price")
+        print("4. Delete Car by ID")
+        print("5. Update Car Details by ID")
+        print("6. Exit")
+        
+        choice = int(input("Enter your choice (1-6): "))
+        
+        if choice == 1:
+            add_car()
+        elif choice == 2:
+            view_all_cars()
+        elif choice == 3:
+            search_car_by_model_or_price()
+        elif choice == 4:
+            delete_car_by_id()
+        elif choice == 5:
+            update_car_details()
+        elif choice == 6:
+            print("Exiting the system.")
+            break
+        else:
+            print("Invalid choice! Please try again.")
+
+if __name__ == "__main__":
+    main()
